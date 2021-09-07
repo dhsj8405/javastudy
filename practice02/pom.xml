@@ -5,5 +5,5 @@
     <artifactId>javastudy</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>project02</artifactId>
+  <artifactId>practice02</artifactId>
 </project>
