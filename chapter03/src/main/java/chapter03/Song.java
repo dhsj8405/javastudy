@@ -8,6 +8,23 @@ public class Song {
 	private int year;
 	private int track;
 	
+	public Song(String title, String artist) {
+		//this.title = title;
+		//this.artist = artist;
+		// some code..
+		this(title,artist,null,null,0,0);//생성자 호출하는 방법
+	}
+	
+	public Song(String title, String artist, String composer, String album, int year, int track) {
+		this.title = title;
+		this.artist = artist;
+		this.composer = composer;
+		this.album = album;
+		this.year = year;
+		this.track = track;
+		// some code.. 
+	}
+	
 	public String getTitle() {
 		return title;
 	}
