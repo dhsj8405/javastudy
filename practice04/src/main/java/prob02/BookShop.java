@@ -24,9 +24,16 @@ public class BookShop {
 		scanner.close();
 		
 		// (1) 입력된 번호에 맞는 책을 찾아 대여 되었음(상태코드=0)을 체크 합니다.
-		
+		books[num-1].rent();
 		// (2) Book 객체의 정보를 출력
 		System.out.println("*****도서 정보 출력하기******");
 		displayBookInfo( books );
 	}
+
+	private static void displayBookInfo(Book[] books) {
+		for(int i = 0 ; i< books.length; i++) {
+			books[i].print();
+		}
+	}
+	
 }
