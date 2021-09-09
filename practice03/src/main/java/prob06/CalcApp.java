@@ -71,8 +71,6 @@ public class CalcApp {
 	public static int calculate(Arith arith) {
 		return arith.calculate();
 	}
-	public static void setValue(int lValue, int rValue) {
-		setValue(lValue,rValue);
-	}
+
 
 }
