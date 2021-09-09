@@ -38,8 +38,13 @@ public class TV {
 		this.channel = channel;
 	}
 	public void channel(boolean up) {
-		channel(channel + (up ? 1 : -1));
+		//channel(channel + (up ? 1 : -1));
+		if(up) {
+			channel(channel + 1);
+		}else {
+			channel(channel - 1);
 		}
+	}
 	public void volume(int volume) {
 		if(!this.power) {
 			return;
