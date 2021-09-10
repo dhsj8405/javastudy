@@ -2,12 +2,9 @@ package prob3;
 
 public abstract class Bird {
 	protected String name;
+	protected abstract void setName(String string);
 
-	public String getName() {
-		return name;
-	}
+	public abstract void fly();
+	public abstract void sing();
 
-	public void setName(String name) {
-		this.name = name;
-	}
 }
