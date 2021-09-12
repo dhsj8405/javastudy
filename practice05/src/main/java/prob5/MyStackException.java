@@ -1,10 +1,13 @@
 package prob5;
 
-public class MyStackException extends Exception {
+public class MyStackException extends Exception{
 
-	@Override
-	public String toString() {
-		return "MyStackException: stack is empty";
+	public MyStackException(){
+		super("Prob5.MyStackException: stack is empty");
 	}
+//	@Override
+//	public String toString() {
+//		return "Prob5.MyStackException: stack is empty";
+//	}
 
 }

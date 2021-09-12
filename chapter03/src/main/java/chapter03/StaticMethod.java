@@ -14,7 +14,6 @@ public class StaticMethod {
 	void f3() {
 		f2();
 	}
-	
 	static void s1() {
 		//오류 : static 메소드에서는 인스턴스 변수 접근 불가)
 		//System.out.println(n);

@@ -5,10 +5,9 @@ public class MyStack {
 	static String tmp1[]; 
 	static String tmp2[];
 	static String pop_tmp1[];
+	static String checkEmpty = " ";
 	static int index = 0 ;
 	static int a =1 ;
-	
-	
 	
 	public MyStack(int i) {
 		tmp1 = new String[i];
@@ -16,7 +15,7 @@ public class MyStack {
 
 	public boolean isEmpty() {
 		
-		return (tmp1 == null)? true : false;
+		return (checkEmpty == null)? true : false;
 	}
 
 	public void push(String string) {
@@ -31,16 +30,15 @@ public class MyStack {
 		}
 	}
 	public String pop() {
-		if (index == 4) {
-			a = 2;
-			
-		}
-		tmp = tmp1[index-1];
-		pop_tmp1 = new String [index--];
+		index--;
+		tmp = tmp1[index];
+		pop_tmp1 = new String [index];
 			for(int i = 0 ; i < index ; i ++) {
 				pop_tmp1[i] = tmp1[i];
 			}
-		
+		if(index == 0){
+			checkEmpty = null;
+		}
 		return tmp ;
 	}
 }

@@ -24,7 +24,6 @@ public class TV {
 	public void power(boolean on) {
 		this.power = on;
 	}
-
 	public void channel(int channel) {
 		if(!this.power) {
 			return;

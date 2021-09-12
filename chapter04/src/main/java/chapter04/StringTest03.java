@@ -24,5 +24,4 @@ public class StringTest03 {
 		String s3 = sb2.toString();
 		System.out.println(s3.length());
 	}
-
 }

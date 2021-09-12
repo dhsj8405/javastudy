@@ -3,7 +3,7 @@ package prob5;
 public class MainApp {
 
 	public static void main(String[] args) {
-//		try {
+		try {
 			MyStack stack = new MyStack(3);
 			stack.push("Hello");
 			stack.push("World");
@@ -16,17 +16,17 @@ public class MainApp {
 				System.out.println( s );
 			}
 
-//			System.out.println("======================================");
-//
-//			stack = new MyStack(3);
-//			stack.push("Hello");
-//
-//			System.out.println(stack.pop());
-//			System.out.println(stack.pop());
-//			
-//		} catch ( MyStackException ex) {
-//			System.out.println( ex );
-//		}
+			System.out.println("======================================");
+
+			stack = new MyStack(3);
+			stack.push("Hello");
+
+			System.out.println(stack.pop());
+			System.out.println(stack.pop());
+			
+		}catch ( MyStackException ex) {
+			System.out.println( ex );
+		}
 
 	}
 

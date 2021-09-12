@@ -5,7 +5,7 @@ public class ObjectTest01 {
 	public static void main(String[] args) {
 		Point p = new Point(10,20);
 		
-		// Class klass = p.getClass();
+//		 Class klass = p.getClass();
 		System.out.println(p.getClass()); 	//refrection
 		System.out.println(p.hashCode()); 	// address 기반의 해싱값
 											// address x

@@ -1,5 +1,4 @@
 package com.douzone.paint.point;
-
 import com.douzone.paint.I.Drawable;
 
 public class Point implements Drawable {
@@ -13,7 +12,6 @@ public class Point implements Drawable {
 		this.x = x;
 		this.y = y;	
 	}
-	
 	public int getX() {
 		return x;
 	}
