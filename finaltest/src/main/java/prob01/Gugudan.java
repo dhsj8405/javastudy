@@ -51,22 +51,24 @@ public class Gugudan {
 
 	private static int[] randomizeAnswers() {
 		/* 코드 작성(수정 가능) */
+		int l;
+		int r;
+		int i=0;
+		Set<GugudanExpression> s = new HashSet<>();
 		
-		Set<Gugudan> s = new HashSet<>();
-		
-		for(int i = 0 ; i < 10 ; i ++) {
-			int l = randomize(1, 9);
-			int r = randomize(1, 9);
-			s.add(new Gugudan(l,r));
+		while(s.size() !=9) {
+			l = randomize(1, 9);
+			r = randomize(1, 9);
+			s.add(new GugudanExpression(l,r));
 		}
-		
+		System.out.println(s.size());
 		final int COUNT_ANSWER_NUMBER = 9;
 		int[] boardNumbers = new int[COUNT_ANSWER_NUMBER];
+		
+		for(GugudanExpression d:s) {
+			boardNumbers[i++]=.d;
+		}
 		return boardNumbers;
 		
 	}
-	
-		
-		
-	
 }
