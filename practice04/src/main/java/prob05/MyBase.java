@@ -2,8 +2,6 @@ package prob05;
 
 public class MyBase extends Base {
 	public void service(String state){
-
-		
 		if(state.equals( "오후" ) ) {
 			midnight();
 		}else {

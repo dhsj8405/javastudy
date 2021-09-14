@@ -1,11 +1,9 @@
 package prob01;
 
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
-
-import collection.Gugudan;
 
 public class Gugudan {
 
@@ -51,24 +49,24 @@ public class Gugudan {
 
 	private static int[] randomizeAnswers() {
 		/* 코드 작성(수정 가능) */
-		int l;
-		int r;
-		int i=0;
-		Set<GugudanExpression> s = new HashSet<>();
-		
-		while(s.size() !=9) {
-			l = randomize(1, 9);
-			r = randomize(1, 9);
-			s.add(new GugudanExpression(l,r));
-		}
-		System.out.println(s.size());
 		final int COUNT_ANSWER_NUMBER = 9;
 		int[] boardNumbers = new int[COUNT_ANSWER_NUMBER];
-		
-		for(GugudanExpression d:s) {
-			boardNumbers[i++]=.d;
+		int l;
+		int r;
+		int i = 0;
+		Set<Integer> s = new HashSet<>();
+
+		while (s.size() != 9) {
+			l = randomize(1, 9);
+			r = randomize(1, 9);
+			if (l * r != resultNumber) {
+				s.add(new Integer(l * r));
+			}
+		}
+		for (Integer d : s) {
+			boardNumbers[i++] = d;
 		}
 		return boardNumbers;
-		
+
 	}
 }
