@@ -30,7 +30,7 @@ public class TCPServer {
 																												// 다운캐스팅
 			String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 			int remoteHostPort = inetRemoteSocketAddress.getPort();
-			System.out.println("[server] connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
+			System.out.println("[server] connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");	// TCPClient 컴파일시 cmd창에  출력
 
 			try { // 데이터통신 IO에대한 익셉션
 				// 4. IO Stream 받아오기
@@ -67,7 +67,7 @@ public class TCPServer {
 					e.printStackTrace();
 				}
 			}
-		} catch (IOException e) { // 서보소켓관련 io익셉션
+		} catch (IOException e) { // 서버소켓관련 io익셉션
 			System.out.println("[server] error : " + e);
 		} finally {
 			try {
