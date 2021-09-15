@@ -36,10 +36,10 @@ public class CalcApp {
 				public int calculate(int a, int b) {
 					int calResult =0 ;
 					switch(tokens[2]) {
-					case "+" : calResult = a + b;
-					case "-" : calResult = a - b;
-					case "*" : calResult = a * b;
-					case "/" : calResult = a / b;
+					case "+" : calResult = a + b; break;
+					case "-" : calResult = a - b; break;
+					case "*" : calResult = a * b; break;
+					case "/" : calResult = a / b; break;
 					}
 					return calResult;
 				}
