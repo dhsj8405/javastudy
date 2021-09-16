@@ -31,13 +31,14 @@ public class ChatClient {
 			socket = new Socket();
 			String hostAddress = InetAddress.getLocalHost().getHostAddress();
 			socket.connect(new InetSocketAddress(hostAddress, SERVER_PORT));
-			
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
 			pw.println("join:" +nickname+"\n");
 			br.readLine();
-			new ChatClientThread(socket).start();
 
+
+			new ChatClientThread(socket).start();
+			
 		} catch (IOException e) {
 			log("error:" + e);
 		}finally {

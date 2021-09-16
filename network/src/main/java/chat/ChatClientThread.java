@@ -11,17 +11,22 @@ import java.util.Scanner;
 public class ChatClientThread extends Thread {
 		private Socket socket;
 		private String nickname;
+		private BufferedReader br;
 		public ChatClientThread(Socket socket) {
 			this.socket = socket;
 		}
 		@Override
 		public void run() {
+
 			Scanner scanner = null;
 			try {
-				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-				
+				br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"), true);
+				System.out.println("ㅂㅇ");
+
 			while(true) {
+				
+
 				System.out.println(">");
 				String line = scanner.nextLine();
 				if("quit".equals(line)) {
@@ -42,8 +47,8 @@ public class ChatClientThread extends Thread {
 			ChatClient.log("error" +e);
 		}finally {
 			try {
-				if (socket != null && socket.isClosed() == false) {
-					socket.close();
+				if (this.socket != null && this.socket.isClosed() == false) {
+					this.socket.close();
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

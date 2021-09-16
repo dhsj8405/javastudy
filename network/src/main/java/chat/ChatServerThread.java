@@ -29,14 +29,14 @@ public class ChatServerThread extends Thread {
 	@Override
 	public void run() {
 		// 1. Remote Host Information
-		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
+		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) this.socket.getRemoteSocketAddress();
 		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 		int remoteHostPort = inetRemoteSocketAddress.getPort();
 		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
 		try {
 			// 2. 스트림 얻기
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"), true);
 			// 3. 요청 처리
 			while (true) {
 				String request = br.readLine();
@@ -48,17 +48,20 @@ public class ChatServerThread extends Thread {
 
 				// 4. 프로토콜 분석
 				String[] tokens = request.split(":");
-				if ("join".equals(tokens[0])) {			
+				if ("join".equals(tokens[0])) {		
 					doJoin( tokens[1], pw);	
 				}else if("message".equals(tokens[0])) {
+
 					doMessage(tokens[1]);
 				}else if("quit".equals(tokens[0])) {
+
 					doQuit(pw);
 				}else {
+
 					ChatServer.log("에러:알수 없는 요청(" + tokens[0] + ")");
 				}
 			}
-
+			
 		} catch (IOException e) { // 2. 스트림 얻기에대한 익셉션
 			ChatServer.log("error: " + e);
 		}
@@ -66,12 +69,12 @@ public class ChatServerThread extends Thread {
 
 	private void doQuit(Writer writer) {
 	removeWriter(writer);
-	
+
 	broadcast( this.nickname + "님이 퇴장 하였습니다.");
 	}
 	private void removeWriter(Writer writer) {
-		synchronized(listWriters) {
-			listWriters.remove(writer);
+		synchronized(this.listWriters) {
+			this.listWriters.remove(writer);
 		}
 	}
 
@@ -85,7 +88,6 @@ public class ChatServerThread extends Thread {
 		String data = nickname + "님이 참여하였습니다.";
 		
 		addWriter(writer);
-		System.out.println("ㅎㅇ3");
 		broadcast(data);
 
 		((PrintWriter)writer).println("join:ok");
@@ -94,17 +96,15 @@ public class ChatServerThread extends Thread {
 	private void addWriter(Writer writer) {
 		
 		synchronized(writer) {
-			System.out.println("ㅎㅇ1");
-			listWriters.add(writer);
+			this.listWriters.add(writer);
 		}
-		System.out.println("ㅎㅇ2");
 
 	}
 	private void broadcast(String data) {
 
-		synchronized(listWriters) {
+		synchronized(this.listWriters) {
 
-			for(Writer writer: listWriters) {
+			for(Writer writer: this.listWriters) {
 
 				PrintWriter printWriter = (PrintWriter)writer;
 
