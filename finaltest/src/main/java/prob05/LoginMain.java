@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import prob5.MyStackException;
 
 public class LoginMain {
 
@@ -42,10 +41,10 @@ public class LoginMain {
 		int idKey = 0;
 		int pwKey = 0;
 		for (User id : users) {
-			if (user.getId() == id.getId()) {
+			if (user.getId().equals(id.getId())) {
 				idKey = 1;
 				for (User pw : users) {
-					if (user.getPassword() == pw.getPassword()) {
+					if (user.getPassword().equals(pw.getPassword())) {
 						pwKey = 1;
 					}
 				}
@@ -53,7 +52,7 @@ public class LoginMain {
 		}
 		if(idKey == 0) {
 			throw new UserNotFoundException();
-		}else if(pwKey == 0) {
+		}else if(idKey == 1 && pwKey == 0) {
 			throw new PasswordDismatchException();	
 		}
 		
