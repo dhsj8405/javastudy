@@ -66,7 +66,6 @@ public class EchoServer {
 			}
 		}
 	}
-
 	public static void log(String log) {
 		System.out.println("[EchoServer] " + log);
 	}
