@@ -57,7 +57,7 @@ public class RequestHandler extends Thread {
 			}else {
 				// methods: POST, PUT, DELETE, HEAD, CONNECT
 				// SimpleHttpServer 에서는 무시(400 Bad REquest 처리)
-//				response400Error(outputStream, tokens[1], tokens[2]);
+				response400Error(outputStream, tokens[1], tokens[2]);
 			}
 			
 			// logging Remote Host IP Address & Port
@@ -94,9 +94,10 @@ public class RequestHandler extends Thread {
 		
 		File file = new File(DOCUMENT_ROOT + url);
 		if(!file.exists()) {
-//			response404Error(outputStream, url, protocol);
+			response404Error(outputStream, url, protocol);
 			return ;
 		}
+		
 		
 		//nio
 		byte[] body = Files.readAllBytes(file.toPath());	//try catch 안쓰고 밖으로 던져서 한곳에 IOException 모은다
@@ -110,4 +111,25 @@ public class RequestHandler extends Thread {
 	public void consoleLog( String message ) {
 		System.out.println( "[RequestHandler#" + getId() + "] " + message );
 	}
+	private void response404Error(OutputStream outputStream, String url, String protocol) throws IOException{
+		url = "./error/404.html";
+		File file = new File(DOCUMENT_ROOT + url);
+		byte[] body = Files.readAllBytes(file.toPath());	//try catch 안쓰고 밖으로 던져서 한곳에 IOException 모은다
+		String contentType = Files.probeContentType(file.toPath()); // 마임타입 구하는 방법
+		outputStream.write( (protocol + " 404 Bad RequestOK\n").getBytes( "UTF-8" ) );
+		outputStream.write( ("Content-Type:"+ contentType +"; charset=utf-8\n").getBytes( "UTF-8" ) );// css까지 잘나오려면 마임타입적어야함
+		outputStream.write( "\n".getBytes() ); // 빈 개행 헤더 , 바디 나눠줌
+		outputStream.write(body);
+	}
+	private void response400Error(OutputStream outputStream, String url, String protocol) throws IOException {
+		url = "./error/400.html";
+		File file = new File(DOCUMENT_ROOT + url);
+		byte[] body = Files.readAllBytes(file.toPath());	//try catch 안쓰고 밖으로 던져서 한곳에 IOException 모은다
+		String contentType = Files.probeContentType(file.toPath()); // 마임타입 구하는 방법
+		outputStream.write( (protocol + " 400 Bad Request OK\n").getBytes( "UTF-8" ) );
+		outputStream.write( ("Content-Type:"+ contentType +"; charset=utf-8\n").getBytes( "UTF-8" ) );// css까지 잘나오려면 마임타입적어야함
+		outputStream.write( "\n".getBytes() ); // 빈 개행 헤더 , 바디 나눠줌
+		outputStream.write(body);
+	}
+
 }
