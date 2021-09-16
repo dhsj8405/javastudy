@@ -11,23 +11,38 @@ import java.util.List;
 
 public class ChatServer {
 	private static final int PORT = 6000;
-	private static List<Writer> listWriters ;
+	static 	List<Writer> listWriters;
 	public static void main(String[] args) {
+		ServerSocket serverSocket = null;
 		try {
 		System.out.print(">>");
-		ServerSocket serverSocket = null;
+		//서버소켓 객체 생성
 		serverSocket = new ServerSocket();
+		//bind
 		String hostAddress = InetAddress.getLocalHost().getHostAddress();
 		serverSocket.bind(new InetSocketAddress(hostAddress, PORT)); 
 		log("연결 기다림 " + hostAddress + ":" + PORT);
+		//요청대기
 		while(true) {
+			//accept
 			Socket socket = serverSocket.accept();
-			listWriters = new ArrayList<Writer>();
+			List<Writer> listWriters = new ArrayList<Writer>();
+			//read,write
 			new ChatServerThread(socket,listWriters).start();
-			new ChatServerThread(socket).start();
+//			new ChatServerThread(socket).start();
 		}
 		}catch(IOException e) {
 			log("error: " + e);
+		}finally{
+			try {
+				//close
+				if (serverSocket != null && serverSocket.isClosed() == false) {
+					serverSocket.close();
+					
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}

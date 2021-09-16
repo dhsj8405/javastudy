@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +17,15 @@ import echo.EchoServer;
 public class ChatServerThread extends Thread {
 	private Socket socket;
 	private String nickname;
-	private List<Writer> listWriters;
-
-	public ChatServerThread(Socket socket) {
-		this.socket = socket;
-	}
+	List<Writer> listWriters;
+	BufferedReader br;
+	PrintWriter pw;
+//
+//	public ChatServerThread(Socket socket) {
+//		this.socket = socket;
+//	}
 	public ChatServerThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
-//		this.listWriters = new ArrayList<Writer>();
 		this.listWriters = listWriters;
 	}
 	@Override
@@ -35,8 +37,8 @@ public class ChatServerThread extends Thread {
 		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
 		try {
 			// 2. 스트림 얻기
-			BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"), true);
+			br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
+			pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8), true);
 			// 3. 요청 처리
 			while (true) {
 				String request = br.readLine();
@@ -46,15 +48,14 @@ public class ChatServerThread extends Thread {
 					break;
 				}
 
+
 				// 4. 프로토콜 분석
 				String[] tokens = request.split(":");
 				if ("join".equals(tokens[0])) {		
 					doJoin( tokens[1], pw);	
 				}else if("message".equals(tokens[0])) {
-
 					doMessage(tokens[1]);
 				}else if("quit".equals(tokens[0])) {
-
 					doQuit(pw);
 				}else {
 
@@ -63,7 +64,7 @@ public class ChatServerThread extends Thread {
 			}
 			
 		} catch (IOException e) { // 2. 스트림 얻기에대한 익셉션
-			ChatServer.log("error: " + e);
+			ChatServer.log("stream error: " + e);
 		}
 	}
 
@@ -73,20 +74,20 @@ public class ChatServerThread extends Thread {
 	broadcast( this.nickname + "님이 퇴장 하였습니다.");
 	}
 	private void removeWriter(Writer writer) {
-		synchronized(this.listWriters) {
-			this.listWriters.remove(writer);
+		synchronized(listWriters) {
+			listWriters.remove(writer);
 		}
 	}
 
 	private void doMessage(String message) {
 //			(this.nickname + " : " + m);
-			broadcast(this.nickname + " : " + message);
+			broadcast(nickname + " : " + message);
 	}
 
 	private void doJoin(String nickname, Writer writer) {
 		this.nickname =	nickname;
 		String data = nickname + "님이 참여하였습니다.";
-		
+
 		addWriter(writer);
 		broadcast(data);
 
@@ -95,25 +96,18 @@ public class ChatServerThread extends Thread {
 	}
 	private void addWriter(Writer writer) {
 		
-		synchronized(writer) {
-			this.listWriters.add(writer);
+		synchronized(listWriters) {
+			listWriters.add(writer);
 		}
 
 	}
 	private void broadcast(String data) {
 
-		synchronized(this.listWriters) {
-
-			for(Writer writer: this.listWriters) {
-
+		synchronized(listWriters) {
+			for(Writer writer: listWriters) {
 				PrintWriter printWriter = (PrintWriter)writer;
-
 				printWriter.println(data);
-
-
-					printWriter.flush();
-
-
+				printWriter.flush();
 			}
 		}
 	}
