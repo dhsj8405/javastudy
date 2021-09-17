@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,6 @@ public class ChatServer {
 				Socket socket = serverSocket.accept();
 				// read,write
 				new ChatServerThread(socket, listWriters).start();
-//			new ChatServerThread(socket).start();
 			}
 		} catch (IOException e) {
 			log("ChatServer 대기중에러: " + e);
@@ -41,7 +41,6 @@ public class ChatServer {
 				// close
 				if (serverSocket != null && serverSocket.isClosed() == false) {
 					serverSocket.close();
-
 				}
 			} catch (IOException e) {
 				log("ChatServer 소켓종료시 에러");

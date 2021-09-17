@@ -18,12 +18,8 @@ public class ChatServerThread extends Thread {
 	private Socket socket;
 	private String nickname;
 	List<Writer> listWriters;
-	BufferedReader br;
-	PrintWriter pw;
-//
-//	public ChatServerThread(Socket socket) {
-//		this.socket = socket;
-//	}
+	
+
 	public ChatServerThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
 		this.listWriters = listWriters;
@@ -37,8 +33,8 @@ public class ChatServerThread extends Thread {
 		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
 		try {
 			// 2. 스트림 얻기
-			br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
-			pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8), true);
+			BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8), true);
 			// 3. 요청 처리
 			while (true) {
 				String request = br.readLine();
@@ -47,8 +43,6 @@ public class ChatServerThread extends Thread {
 					doQuit(pw);
 					break;
 				}
-
-
 				// 4. 프로토콜 분석
 				String[] tokens = request.split(":");
 				if ("join".equals(tokens[0])) {		
@@ -57,10 +51,10 @@ public class ChatServerThread extends Thread {
 					doMessage(tokens[1]);
 				}else if("quit".equals(tokens[0])) {
 					doQuit(pw);
-				}else {
-
-					ChatServer.log("에러:알수 없는 요청(" + tokens[0] + ")");
 				}
+//				else {
+//					ChatServer.log("에러:알수 없는 요청(" + tokens[0] + ")");
+//				}
 			}
 			
 		} catch (IOException e) { // 2. 스트림 얻기에대한 익셉션
@@ -70,7 +64,6 @@ public class ChatServerThread extends Thread {
 
 	private void doQuit(Writer writer) {
 	removeWriter(writer);
-
 	broadcast( this.nickname + "님이 퇴장 하였습니다.");
 	}
 	private void removeWriter(Writer writer) {
@@ -78,12 +71,9 @@ public class ChatServerThread extends Thread {
 			listWriters.remove(writer);
 		}
 	}
-
 	private void doMessage(String message) {
-//			(this.nickname + " : " + m);
 			broadcast(nickname + " : " + message);
 	}
-
 	private void doJoin(String nickname, Writer writer) {
 		this.nickname =	nickname;
 		String data = nickname + "님이 참여하였습니다.";
@@ -92,7 +82,7 @@ public class ChatServerThread extends Thread {
 		broadcast(data);
 
 		((PrintWriter)writer).println("join:ok");
-		((PrintWriter)writer).flush();
+//		((PrintWriter)writer).flush();
 	}
 	private void addWriter(Writer writer) {
 		

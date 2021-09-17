@@ -61,7 +61,6 @@ public class TCPServer {
 						e.printStackTrace();
 					}
 
-					
 				}
 			} catch (SocketException e) {
 				System.out.println("[server] suddenly closed by client" + e);
