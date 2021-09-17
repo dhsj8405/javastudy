@@ -38,10 +38,10 @@ public class ChatClient {
 //			pw.flush();
 		
 //			br.readLine();
-
+		
 			//6. 쓰레드시작 write,read
 			new ChatClientThread(socket).start();
-			
+	
 
 		
 

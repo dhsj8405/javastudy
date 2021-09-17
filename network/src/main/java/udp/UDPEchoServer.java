@@ -6,8 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 
 public class UDPEchoServer {
-	private static final int PORT = 7000;
-
+	public static final int PORT = 7000;
+	public static final int BUFFER_SIZE =1024;
 	public static void main(String[] args) {
 		DatagramSocket socket = null;
 

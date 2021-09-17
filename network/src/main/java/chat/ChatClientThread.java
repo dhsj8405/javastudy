@@ -37,7 +37,7 @@ public class ChatClientThread extends Thread {
 				ChatClient.log("26");
 				
 
-//				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
 
 
 				while(true){
@@ -47,7 +47,7 @@ public class ChatClientThread extends Thread {
 //					pw.println(line);
 //					System.out.println(br.readLine());
 					while(true){
-						line = br.readLine();
+//						line = br.readLine();
 						// 8. quit 프로토콜 처리
 						if("quit".equals(line)) {
 							break;
