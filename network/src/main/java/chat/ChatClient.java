@@ -13,13 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ChatClient {
-//	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 6000;
-//	List<Writer> listWriters;
 	public static void main(String[] args) {
 		Socket socket = null;
 		Scanner scanner = null;
-//		String nickname;
 		String line;
 		try {
 			
@@ -44,18 +41,12 @@ public class ChatClient {
 				line = scanner.nextLine();//block
 				// 8. quit 프로토콜 처리
 				if("quit".equals(line)) {
+						ChatClient.log("채팅방을 나갔습니다.");
 					break;
 				
 				}else {
 				// 9.메시지 처리 
-					pw.println("message:"+line); // 스캐너로 입력할때 개행이 입력안되므로 보내주는것
-//					pw.flush();
-					//String data = br.readLine();
-//					if(data == null) {
-//						ChatClient.log("closed by server");
-//						break;
-//					}
-//					System.out.println(data);
+					pw.println("message:"+line);
 				}
 				
 			}

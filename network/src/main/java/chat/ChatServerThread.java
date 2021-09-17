@@ -19,7 +19,6 @@ public class ChatServerThread extends Thread {
 	private String nickname;
 	List<Writer> listWriters;
 	
-
 	public ChatServerThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
 		this.listWriters = listWriters;
@@ -52,11 +51,7 @@ public class ChatServerThread extends Thread {
 				}else if("quit".equals(tokens[0])) {
 					doQuit(pw);
 				}
-//				else {
-//					ChatServer.log("에러:알수 없는 요청(" + tokens[0] + ")");
-//				}
 			}
-			
 		} catch (IOException e) { // 2. 스트림 얻기에대한 익셉션
 			ChatServer.log("stream error: " + e);
 		}
@@ -82,14 +77,12 @@ public class ChatServerThread extends Thread {
 		broadcast(data);
 
 		((PrintWriter)writer).println("join:ok");
-//		((PrintWriter)writer).flush();
 	}
 	private void addWriter(Writer writer) {
 		
 		synchronized(listWriters) {
 			listWriters.add(writer);
 		}
-
 	}
 	private void broadcast(String data) {
 
@@ -101,6 +94,4 @@ public class ChatServerThread extends Thread {
 			}
 		}
 	}
-	
-
 }
