@@ -2,6 +2,7 @@ package chat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -14,7 +15,8 @@ public class ChatClientThread extends Thread {
 		private Socket socket;
 		private String nickname;
 		List<Writer> listWriters;
-
+		BufferedReader br;
+		PrintWriter pw ;
 		public ChatClientThread(Socket socket) {
 			this.socket = socket;
 		}
@@ -23,9 +25,21 @@ public class ChatClientThread extends Thread {
 			Scanner scanner = null;
 			try {
 				// 9.메시지 처리
+				ChatClient.log("25");
+				System.out.println(socket != null );
+				System.out.println(socket.isConnected() );
+				
+				System.out.println(socket.getInetAddress());
+				
+;
+				
+//				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+				ChatClient.log("26");
+				
 
-				BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), "UTF-8"));
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), "UTF-8"), true);
+//				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+
+
 				while(true){
 					System.out.print(">");
 					scanner = new Scanner(System.in);
@@ -54,7 +68,7 @@ public class ChatClientThread extends Thread {
 				}
 				
 		}catch(IOException e) {
-			ChatClient.log("error" +e);
+			ChatClient.log("ChatClientThread 에러 " +e);
 		}
 			
 		}

@@ -9,18 +9,15 @@ import java.io.Writer;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.List;
 import java.util.Scanner;
-
-import echo.EchoServerReceiveThread;
 
 public class ChatClient {
 //	private static final String SERVER_IP = "127.0.0.1";
 	private static final int SERVER_PORT = 6000;
 	List<Writer> listWriters;
-
 	public static void main(String[] args) {
+		BufferedReader br;
 		Socket socket = null;
 		Scanner scanner = null;
 		String nickname;
@@ -35,12 +32,11 @@ public class ChatClient {
 			System.out.print("닉네임>>");
 			scanner = new Scanner(System.in);
 			nickname = scanner.nextLine();
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-			pw.println("join:" + nickname );
-			pw.flush();
-//			System.out.println(br.readLine());
-			
+			pw.println("join:" + nickname +"\n");
+//			pw.flush();
+		
 //			br.readLine();
 
 			//6. 쓰레드시작 write,read

@@ -13,7 +13,10 @@ public class ChatServer {
 	private static final int PORT = 6000;
 	static 	List<Writer> listWriters;
 	public static void main(String[] args) {
+		
 		ServerSocket serverSocket = null;
+		List<Writer> listWriters = new ArrayList<Writer>();
+		
 		try {
 		System.out.print(">>");
 		//서버소켓 객체 생성
@@ -26,12 +29,12 @@ public class ChatServer {
 		while(true) {
 			//accept
 			Socket socket = serverSocket.accept();
-			List<Writer> listWriters = new ArrayList<Writer>();
 			//read,write
 			new ChatServerThread(socket,listWriters).start();
 //			new ChatServerThread(socket).start();
 		}
 		}catch(IOException e) {
+			log("어디지? 35");
 			log("error: " + e);
 		}finally{
 			try {
@@ -41,6 +44,7 @@ public class ChatServer {
 					
 				}
 			} catch (IOException e) {
+				log("어디지? 44");
 				e.printStackTrace();
 			}
 		}
