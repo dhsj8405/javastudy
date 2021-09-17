@@ -39,14 +39,32 @@ public class ChatClient {
 		
 //			br.readLine();
 		
-			//6. 쓰레드시작 write,read
+			//6. 쓰레드시작 :읽기
 			new ChatClientThread(socket).start();
 	
+			//쓰기
+			while(true){
+				System.out.print(">");
+				scanner = new Scanner(System.in);
+				line = scanner.nextLine();
+//				line = br.readLine();
+				// 8. quit 프로토콜 처리
+				if("quit".equals(line)) {
+					break;
+				
+				}else {
+					pw.println("message:"+line); // 스캐너로 입력할때 개행이 입력안되므로 보내주는것
+					pw.flush();
 
-		
-
-			
-			
+					String data = br.readLine();
+					if(data == null) {
+						ChatClient.log("closed by server");
+						break;
+					}
+					System.out.println("<" + data);
+				}
+				
+			}
 		} catch (IOException e) {
 			log("error:" + e);
 		}finally {

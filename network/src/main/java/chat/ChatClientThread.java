@@ -17,54 +17,50 @@ public class ChatClientThread extends Thread {
 		List<Writer> listWriters;
 		BufferedReader br;
 		PrintWriter pw ;
+		String line =null;
 		public ChatClientThread(Socket socket) {
 			this.socket = socket;
 		}
 		@Override
 		public void run() {
-			Scanner scanner = null;
 			try {
-				// 9.메시지 처리
-				ChatClient.log("25");
-				System.out.println(socket != null );
-				System.out.println(socket.isConnected() );
-				
-				System.out.println(socket.getInetAddress());
-				
-;
-				
-//				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-				ChatClient.log("26");
-				
-
-				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
-
+				// 9.메시지 처리 : 읽기
+				BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
 				while(true){
-					System.out.print(">");
-					scanner = new Scanner(System.in);
-					String line = scanner.nextLine();
+				line = br.readLine();
+				// 8. quit 프로토콜 처리
+				System.out.println(line);
+				
+//				PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+
+
+//				while(true){
+//					System.out.print(">");
+//					scanner = new Scanner(System.in);
+//					String line = scanner.nextLine();
 //					pw.println(line);
 //					System.out.println(br.readLine());
-					while(true){
-//						line = br.readLine();
-						// 8. quit 프로토콜 처리
-						if("quit".equals(line)) {
-							break;
-						
-						}else {
-							pw.println("message:"+line); // 스캐너로 입력할때 개행이 입력안되므로 보내주는것
-							pw.flush();
-
-							String data = br.readLine();
-							if(data == null) {
-								ChatClient.log("closed by server");
-								break;
-							}
-							System.out.println("<" + data);
-						}
-						
-					}
+//					while(true){
+////						line = br.readLine();
+//						// 8. quit 프로토콜 처리
+//						if("quit".equals(line)) {
+//							break;
+//						
+//						}else {
+//							pw.println("message:"+line); // 스캐너로 입력할때 개행이 입력안되므로 보내주는것
+//							pw.flush();
+//
+//							String data = br.readLine();
+//							if(data == null) {
+//								ChatClient.log("closed by server");
+//								break;
+//							}
+//							System.out.println("<" + data);
+//						}
+//						
+//					}
+//				}
 				}
 				
 		}catch(IOException e) {

@@ -30,21 +30,36 @@ public class ChatWindow {
 	}
 
 	public void show() {
+		
+	/*
+	 * 1. UI초기화
+	 */
 		// Button
 		buttonSend.setBackground(Color.GRAY);
 		buttonSend.setForeground(Color.WHITE);
 		//인터페이스이고 메소드가하나일때 추론가능
-		buttonSend.addActionListener( (e)->	System.out.println("click") );
-//		buttonSend.addActionListener( new ActionListener() {	//어나니머스클래스
-//			@Override
-//			public void actionPerformed( ActionEvent actionEvent ) {
-//				System.out.println("click");
-//				sendMessage();
-//			}
-//		});
+//		buttonSend.addActionListener( (e)->	System.out.println("click") );
+		buttonSend.addActionListener( new ActionListener() {	//어나니머스클래스
+			@Override
+			public void actionPerformed( ActionEvent actionEvent ) {
+				sendMessage();
+			}
+		});
 
+		
 		// Textfield
 		textField.setColumns(80);
+		textField.addKeyListener(new KeyAdapter() {
+
+			@Override 
+			// 엔터키로 메시지 보내는것
+			public void keyPressed(KeyEvent e) {
+				char keyCode = e.getKeyChar();
+				if(keyCode == KeyEvent.VK_ENTER) {
+					sendMessage();
+				}
+			}
+		});
 
 		// Pannel
 		pannel.setBackground(Color.LIGHT_GRAY);
@@ -64,8 +79,35 @@ public class ChatWindow {
 		});
 		frame.setVisible(true);
 		frame.pack();
+		/*
+		 * 2.IOStream 가져오기
+		 */
+		
+		/*
+		 * 3. Chat Client Thread 생성
+		 */
 	}
 	
 	private void sendMessage() {
+		String message = textField.getText();
+		System.out.println("메세지 보내는 프로토콜 구현:" + message);
+		textField.setText("");
+		textField.requestFocus();
+		//Receive Thread에서 서버로 부터 받은 메세지가 있다고 치고~
+		updateTextArea("마이콜:" + message);
+	}
+	
+	private void updateTextArea(String message) {
+		textArea.append(message);
+		textArea.append("\n");
+	}
+	private void finish() {
+		System.out.println("소켓 닫기 or 방나가기 프로토콜 구현하기");
+		System.exit(0);
+	}
+	private class ChatClientThread extends Thread {
+		public void run() {
+			updateTextArea("........");
+		}
 	}
 }
