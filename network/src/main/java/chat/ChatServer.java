@@ -44,12 +44,9 @@ public class ChatServer {
 				}
 			} catch (IOException e) {
 				log("ChatServer 소켓종료시 에러");
-				e.printStackTrace();
 			}
 		}
-
 	}
-
 	public static void log(String log) {
 		System.out.println("[ChatServer] " + log);
 	}

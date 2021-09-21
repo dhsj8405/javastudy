@@ -26,14 +26,14 @@ public class ChatServerThread extends Thread {
 	@Override
 	public void run() {
 		// 1. Remote Host Information
-		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) this.socket.getRemoteSocketAddress();
+		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 		int remoteHostPort = inetRemoteSocketAddress.getPort();
 		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
 		try {
 			// 2. 스트림 얻기
-			BufferedReader br = new BufferedReader(new InputStreamReader(this.socket.getInputStream(), StandardCharsets.UTF_8));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.socket.getOutputStream(), StandardCharsets.UTF_8), true);
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 			// 3. 요청 처리
 			while (true) {
 				String request = br.readLine();

@@ -62,7 +62,7 @@ public class ChatClient {
 					socket.close();					
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				log("ChatServer 소켓종료시 에러");
 			}
 		}
 		
