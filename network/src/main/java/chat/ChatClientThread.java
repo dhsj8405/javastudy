@@ -12,19 +12,20 @@ public class ChatClientThread extends Thread {
 	public ChatClientThread(Socket socket) {
 		this.socket = socket;
 	}
+
 	@Override
 	public void run() {
-		try {		
+		try {
 			String line = null;
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-				while (true) {
+			while (true) {
 				// 읽고 채팅방에 써주기
-					line = br.readLine();
-					System.out.println(line);		
-				}
-			
+				line = br.readLine();
+				System.out.println(line);
+			}
+
 		} catch (IOException e) {
-			ChatClient.log("서버와 연결이 종료되었습니다." );
-		} 
+			ChatClient.log("서버와 연결이 종료되었습니다.");
+		}
 	}
 }

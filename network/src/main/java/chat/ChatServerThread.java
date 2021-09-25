@@ -15,11 +15,12 @@ public class ChatServerThread extends Thread {
 	private Socket socket;
 	private String nickname;
 	List<Writer> listWriters;
-	
+
 	public ChatServerThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
+
 	@Override
 	public void run() {
 		// 1. Remote Host Information
@@ -29,8 +30,10 @@ public class ChatServerThread extends Thread {
 		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
 		try {
 			// 2. 스트림 얻기
-			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),
+					true);
 			// 3. 요청 처리
 			while (true) {
 				String request = br.readLine();
@@ -41,11 +44,11 @@ public class ChatServerThread extends Thread {
 				}
 				// 4. 프로토콜 분석
 				String[] tokens = request.split(":");
-				if ("join".equals(tokens[0])) {		
-					doJoin( tokens[1], pw);	
-				}else if("message".equals(tokens[0])) {
+				if ("join".equals(tokens[0])) {
+					doJoin(tokens[1], pw);
+				} else if ("message".equals(tokens[0])) {
 					doMessage(tokens[1]);
-				}else if("quit".equals(tokens[0])) {
+				} else if ("quit".equals(tokens[0])) {
 					doQuit(pw);
 				}
 			}
@@ -55,37 +58,42 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void doQuit(Writer writer) {
-	removeWriter(writer);
-	broadcast( this.nickname + "님이 퇴장 하였습니다.");
+		removeWriter(writer);
+		broadcast(this.nickname + "님이 퇴장 하였습니다.");
 	}
+
 	private void removeWriter(Writer writer) {
-		synchronized(listWriters) {
+		synchronized (listWriters) {
 			listWriters.remove(writer);
 		}
 	}
+
 	private void doMessage(String message) {
-			broadcast(nickname + " : " + message);
+		broadcast(nickname + " : " + message);
 	}
+
 	private void doJoin(String nickname, Writer writer) {
-		this.nickname =	nickname;
+		this.nickname = nickname;
 		String data = nickname + "님이 참여하였습니다.";
 
 		addWriter(writer);
 		broadcast(data);
 
-		((PrintWriter)writer).println("join:ok");
+		((PrintWriter) writer).println("join:ok");
 	}
+
 	private void addWriter(Writer writer) {
-		
-		synchronized(listWriters) {
+
+		synchronized (listWriters) {
 			listWriters.add(writer);
 		}
 	}
+
 	private void broadcast(String data) {
 
-		synchronized(listWriters) {
-			for(Writer writer: listWriters) {
-				PrintWriter printWriter = (PrintWriter)writer;
+		synchronized (listWriters) {
+			for (Writer writer : listWriters) {
+				PrintWriter printWriter = (PrintWriter) writer;
 				printWriter.println(data);
 				printWriter.flush();
 			}

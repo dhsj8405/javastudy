@@ -46,6 +46,7 @@ public class ChatServer {
 			}
 		}
 	}
+
 	public static void log(String log) {
 		System.out.println("[ChatServer] " + log);
 	}
