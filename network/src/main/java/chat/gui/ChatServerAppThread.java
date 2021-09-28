@@ -1,4 +1,4 @@
-package chat;
+package chat.gui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,37 +11,41 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class ChatServerThread extends Thread {
+import chat.ChatServer;
+
+public class ChatServerAppThread extends Thread {
 	private Socket socket;
 	private String nickname;
 	List<Writer> listWriters;
 
-	public ChatServerThread(Socket socket, List<Writer> listWriters) {
+	public ChatServerAppThread(Socket socket, List<Writer> listWriters) {
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
 
 	@Override
 	public void run() {
-		// 1. Remote Host Information
 		InetSocketAddress inetRemoteSocketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
 		String remoteHostAddress = inetRemoteSocketAddress.getAddress().getHostAddress();
 		int remoteHostPort = inetRemoteSocketAddress.getPort();
-		ChatServer.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
+		ChatServerApp.log("connected by client[" + remoteHostAddress + ":" + remoteHostPort + "]");
+
 		try {
 			// 2. 스트림 얻기
 			BufferedReader br = new BufferedReader(
 					new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8),
 					true);
-			// 3. 요청 처리
 			while (true) {
+				// 3. 요청 처리
+				// String request = br.readLine();
+				// if (request == null) {
+				// ChatServerApp.log("클라이언트로 부터 연결 끊김");
+				//// doQuit(pw);
+				// break;
+				// }
 				String request = br.readLine();
-				if (request == null) {
-					ChatServer.log("클라이언트로 부터 연결 끊김");
-					doQuit(pw);
-					break;
-				}
+
 				// 4. 프로토콜 분석
 				String[] tokens = request.split(":");
 				if ("join".equals(tokens[0])) {
@@ -52,9 +56,10 @@ public class ChatServerThread extends Thread {
 					doQuit(pw);
 				}
 			}
-		} catch (IOException e) { // 2. 스트림 얻기에대한 익셉션
-			ChatServer.log("stream error: " + e);
+		} catch (IOException e) {
+			ChatServerApp.log("stream error: " + e);
 		}
+
 	}
 
 	private void doQuit(Writer writer) {
@@ -63,7 +68,7 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void removeWriter(Writer writer) {
-		synchronized (listWriters) {
+		synchronized(listWriters) {
 			listWriters.remove(writer);
 		}
 	}
