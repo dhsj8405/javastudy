@@ -24,12 +24,8 @@
   		</plugin>
   	</plugins>	
   </build>
-   
-   	<profiles>
-   		<profile>
    			<modules>
 			   	<module>practice01</module>
-			   	<module>project02</module>
 			   	<module>chapter03</module>
 			   	<module>practice02</module>
 			   	<module>practice03</module>
@@ -39,7 +35,4 @@
 			   	<module>finaltest</module>
 			   	<module>network</module>
 			</modules>
-   		</profile>
-   	</profiles>
-   	
 </project>
