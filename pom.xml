@@ -24,16 +24,22 @@
   		</plugin>
   	</plugins>	
   </build>
-   <modules>
-   	<module>practice01</module>
-   	<module>project02</module>
-   	<module>chapter03</module>
-   	<module>practice02</module>
-   	<module>practice03</module>
-   	<module>practice04</module>
-   	<module>practice05</module>
-   	<module>chapter04</module>
-   	<module>finaltest</module>
-   	<module>network</module>
-   </modules>
+   
+   	<profiles>
+   		<profile>
+   			<modules>
+			   	<module>practice01</module>
+			   	<module>project02</module>
+			   	<module>chapter03</module>
+			   	<module>practice02</module>
+			   	<module>practice03</module>
+			   	<module>practice04</module>
+			   	<module>practice05</module>
+			   	<module>chapter04</module>
+			   	<module>finaltest</module>
+			   	<module>network</module>
+			</modules>
+   		</profile>
+   	</profiles>
+   	
 </project>
