@@ -2,7 +2,7 @@ package prob02;
 
 import java.util.Scanner;
 
-import com.douzone.paint.I.Drawable;
+//import com.douzone.paint.I.Drawable;
 
 public class CalcApp {
 
