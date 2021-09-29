@@ -19,7 +19,7 @@ public class EchoClient {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(System.in);
-			
+			//morning_test01
 			socket = new Socket();
 			
 			socket.connect(new InetSocketAddress(SERVER_IP, SERVER_PORT));
